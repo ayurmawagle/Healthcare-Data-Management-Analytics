@@ -1,8 +1,8 @@
-# Healthcare Data Processing and Analytics Using Python and SQL
+# Healthcare Data Management Analytics Using Python and SQL
 
 ## Objective
 
-This project demonstrates the end-to-end process of transforming raw healthcare data into a clean, normalized SQL database structure suitable for analysis. It involves preprocessing using Python, designing a normalized relational database schema, and importing the structured data into Microsoft SQL Server. The project is intended for portfolio demonstration and simulates a typical data engineering or data analyst workflow.
+This project demonstrates the end-to-end process of transforming raw healthcare data into a clean, normalized SQL database structure suitable for analysis. It involves preprocessing using Python, designing a normalized relational database schema, and importing the structured data into Microsoft SQL Server. 
 
 ## Repository Contents
 
