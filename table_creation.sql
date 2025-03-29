@@ -114,7 +114,7 @@ FROM staging_data;
 
 -- Adding foreign key to tables
 
--- Joining Patients and Admission Table using PatientID
+-- 1. Joining Patients and Admission Table using PatientID
 
 ALTER TABLE Admission
 ADD PatientID INT;
@@ -134,6 +134,22 @@ JOIN Patient AS p
 	p.BloodGroup = s.Blood_Type
 ;
 
-SELECT * FROM Admission;
 
+-- Joining Admission and Medical Condition Table
 
+ALTER TABLE Admission
+ADD ConditionID INT;
+
+ALTER TABLE Admission
+ADD CONSTRAINT FK_Admission_Condition FOREIGN KEY (ConditionID) REFERENCES MedicalCondition(ConditionID)
+;
+
+UPDATE a
+SET a.ConditionID = m.ConditionID
+FROM Admission AS a 
+JOIN staging_data AS s
+	ON a.DateOfAdmission = s.Date_of_Admission
+JOIN MedicalCondition AS m
+	ON m.Condition = s.Medical_Condition
+
+;
