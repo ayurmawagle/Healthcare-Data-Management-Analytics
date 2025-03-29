@@ -110,3 +110,30 @@ INSERT INTO Billing(BillingAmount )
 SELECT DISTINCT Billing_Amount 
 FROM staging_data;
 
+
+
+-- Adding foreign key to tables
+
+-- Joining Patients and Admission Table using PatientID
+
+ALTER TABLE Admission
+ADD PatientID INT;
+
+ALTER TABLE Admission
+ADD CONSTRAINT FK_Admission_Patient FOREIGN KEY (PatientID) REFERENCES Patient(PatientID);
+
+UPDATE a
+SET a.PatientID = p.PatientID
+FROM Admission AS a
+JOIN staging_data AS s
+	ON a.DateOfAdmission = s.Date_of_Admission
+JOIN Patient AS p
+	ON p.Name = s.Name AND
+	p.Age = s.Age AND
+	p.Gender = s.Gender AND
+	p.BloodGroup = s.Blood_Type
+;
+
+SELECT * FROM Admission;
+
+
