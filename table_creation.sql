@@ -144,12 +144,51 @@ ALTER TABLE Admission
 ADD CONSTRAINT FK_Admission_Condition FOREIGN KEY (ConditionID) REFERENCES MedicalCondition(ConditionID)
 ;
 
+
+INSERT INTO MedicalCondition (Condition)
+SELECT DISTINCT s.Medical_Condition
+FROM staging_data s
+LEFT JOIN MedicalCondition m ON s.Medical_Condition = m.Condition
+WHERE m.ConditionID IS NULL;
+
+
 UPDATE a
 SET a.ConditionID = m.ConditionID
 FROM Admission AS a 
 JOIN staging_data AS s
 	ON a.DateOfAdmission = s.Date_of_Admission
+	AND a.RoomNumber = s.Room_Number
+	AND a.AdmissionType = s.Admission_Type
 JOIN MedicalCondition AS m
 	ON m.Condition = s.Medical_Condition
-
 ;
+
+-- Joining Admission and Hospital Table
+
+ALTER TABLE Admission
+ADD HospitalID INT;
+
+ALTER TABLE Admission
+ADD CONSTRAINT FK_Admission_Hospital FOREIGN KEY (HospitalID) REFERENCES Hospital(HospitalID)
+;
+
+INSERT INTO Hospital (HospitalName)
+SELECT DISTINCT s.Hospital
+FROM staging_data s
+LEFT JOIN Hospital h ON s.Hospital = h.HospitalName
+WHERE h.HospitalID IS NULL;
+
+
+UPDATE a
+SET a.HospitalID = h.HospitalID
+FROM Admission AS a 
+JOIN staging_data AS s
+	ON a.DateOfAdmission = s.Date_of_Admission
+	AND a.RoomNumber = s.Room_Number
+	AND a.AdmissionType = s.Admission_Type
+JOIN Hospital AS h
+	ON h.HospitalName = s.Hospital
+;
+
+
+-- Joining Admission and Doctor Table
