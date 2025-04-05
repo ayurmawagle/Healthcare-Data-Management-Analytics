@@ -38,3 +38,12 @@ ORDER BY average_stay DESC
 ;
 
 
+-- 6. Top 10 Hospitals based on Admissions
+
+SELECT TOP 10 h.HospitalID, h.HospitalName, COUNT(a.AdmissionID) AS count_admission
+FROM Admission AS a
+Join Hospital AS h ON a.HospitalID = h.HospitalID
+GROUP BY h.HospitalID, h.HospitalName
+ORDER BY count_admission DESC
+;
+
