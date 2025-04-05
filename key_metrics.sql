@@ -22,28 +22,9 @@ GROUP BY m.Condition
 ORDER BY frequency DESC
 ;
 
-
 -- 4. Average Billing Amount
 
 SELECT AVG(BillingAmount) AS Average_Billing_Amount FROM Billing;
 
--- 5. Average Length of Stay by Medical Condition
 
-SELECT m.ConditionID, m.Condition, AVG(a.LengthofStay) AS average_stay
-FROM Admission AS a
-JOIN MedicalCondition AS m
-	ON a.ConditionID = m.ConditionID
-GROUP BY m.ConditionID, m.Condition
-ORDER BY average_stay DESC
-;
-
-
--- 6. Top 10 Hospitals based on Admissions
-
-SELECT TOP 10 h.HospitalID, h.HospitalName, COUNT(a.AdmissionID) AS count_admission
-FROM Admission AS a
-Join Hospital AS h ON a.HospitalID = h.HospitalID
-GROUP BY h.HospitalID, h.HospitalName
-ORDER BY count_admission DESC
-;
 

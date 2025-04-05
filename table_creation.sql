@@ -192,3 +192,23 @@ JOIN Hospital AS h
 
 
 -- Joining Admission and Doctor Table
+
+ALTER TABLE Admission
+ADD DoctorID INT;
+
+ALTER TABLE Admission
+ADD CONSTRAINT FK_admission_doctor FOREIGN KEY(DoctorID) REFERENCES Doctor(DoctorID);
+
+UPDATE a
+SET a.DoctorID = d.DoctorID
+FROM Admission AS a
+JOIN staging_data AS s
+    ON a.DateOfAdmission = s.Date_of_Admission
+    AND a.RoomNumber = s.Room_Number
+    AND a.AdmissionType = s.Admission_Type
+JOIN Doctor AS d
+    ON d.DoctorName = s.Doctor;
+;
+
+
+
