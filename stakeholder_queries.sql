@@ -48,12 +48,16 @@ SELECT YearMonth,
 FROM MonthlyAdmission
 ORDER BY YearMonth;
 
+-- 5. Repeating patients
 
-	
+SELECT a.PatientID, p.Name, COUNT(*) AS AdmissionCount
+FROM Admission AS a
+JOIN Patient AS p ON a.PatientID = p.PatientID
+GROUP BY a.PatientID, p.Name
+HAVING COUNT(*) >1
+ORDER BY AdmissionCount DESC;
 
-
-)
-
+ -- 
 
 
 
