@@ -34,18 +34,25 @@ SELECT MIN(DateOfAdmission),
 		MAX(DateOfAdmission)	
 FROM Admission;
 
-
-CREATE VIEW vw_year_month AS
+WITH MonthlyAdmission AS (
 	SELECT 
 		FORMAT(DateOfAdmission, 'yyyy-MM' ) AS YearMonth,
-		COUNT(*) AS AdmissionCount 
+		COUNT(*) AS AdmissionCount
 	FROM Admission
 	GROUP BY FORMAT(DateOfAdmission, 'yyyy-MM' )
-;
+)
 
-SELECT * FROM vw_year_month
-ORDER BY YearMonth ASC;
+SELECT YearMonth, 
+		AdmissionCount, 
+		SUM(AdmissionCount) OVER(ORDER BY YearMonth ROWS UNBOUNDED PRECEDING) AS RollingTotal
+FROM MonthlyAdmission
+ORDER BY YearMonth;
 
+
+	
+
+
+)
 
 
 
