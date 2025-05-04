@@ -41,7 +41,6 @@ WITH MonthlyAdmission AS (
 	FROM Admission
 	GROUP BY FORMAT(DateOfAdmission, 'yyyy-MM' )
 )
-
 SELECT YearMonth, 
 		AdmissionCount, 
 		SUM(AdmissionCount) OVER(ORDER BY YearMonth ROWS UNBOUNDED PRECEDING) AS RollingTotal
