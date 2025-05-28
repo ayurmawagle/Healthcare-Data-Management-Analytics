@@ -15,16 +15,40 @@ ORDER BY COUNT(AdmissionType) DESC;
 
 -- 3. Most Common Medical Conditions
 
-SELECT m.Condition, COUNT(*) AS frequency
-FROM Admission AS a
-JOIN MedicalCondition AS m ON a.ConditionID = m.ConditionID
-GROUP BY m.Condition
-ORDER BY frequency DESC
+SELECT 
+	m.Condition, 
+	COUNT(*) AS frequency
+FROM 
+	Admission AS a
+JOIN 
+	MedicalCondition AS m 
+	ON a.ConditionID = m.ConditionID
+GROUP BY
+	m.Condition
+ORDER BY 
+	frequency DESC
 ;
 
 -- 4. Average Billing Amount
 
-SELECT AVG(BillingAmount) AS Average_Billing_Amount FROM Billing;
+SELECT 
+	AVG(BillingAmount) AS Average_Billing_Amount 
+FROM 
+	Billing;
 
+--5. What is the average age of patients admitted?
+
+SELECT 
+	AVG(Age) AS average_age
+FROM 
+	Patient;
+
+
+-- 	6. What is the gender distribution of patients?
+
+SELECT 
+     COUNT(CASE WHEN Gender = 'Male' THEN 1 END)  AS male_count,
+	 COUNT(CASE WHEN Gender = 'Female' THEN 1 END) AS fenale_count
+FROM Patient p
 
 
